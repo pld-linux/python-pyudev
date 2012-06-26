@@ -15,6 +15,7 @@ URL:		http://pyudev.readthedocs.org/
 BuildRequires:	python-distribute
 BuildRequires:	rpm-pythonprov
 Requires:	python-modules
+Requires:	udev-libs >= 1:151
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
