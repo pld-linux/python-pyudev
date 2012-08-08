@@ -5,12 +5,12 @@
 %define 	module	pyudev
 Summary:	Pure Python binding for libudev
 Name:		python-%{module}
-Version:	0.15
+Version:	0.16.1
 Release:	1
 License:	LGPL v2.1+
 Group:		Development/Languages/Python
 Source0:	http://pypi.python.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
-# Source0-md5:	35d7295e71664bb630a1fa61ad11d6f6
+# Source0-md5:	4034de584b6d9efcbfc590a047c63285
 URL:		http://pyudev.readthedocs.org/
 BuildRequires:	python-distribute
 BuildRequires:	rpm-pythonprov
@@ -52,6 +52,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst TESTING.rst doc/
+%doc CHANGES.rst README.rst doc/
 %{py_sitescriptdir}/%{module}
 %{py_sitescriptdir}/*.egg-info
