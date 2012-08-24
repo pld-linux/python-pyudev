@@ -4,6 +4,7 @@
 
 %define 	module	pyudev
 Summary:	Pure Python binding for libudev
+Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Name:		python-%{module}
 Version:	0.16.1
 Release:	1
@@ -25,7 +26,15 @@ and hardware management and information library for Linux. It supports
 almost all libudev functionality, you can enumerate devices, query
 device properties and attributes or monitor devices, including
 asynchronous monitoring with threads, or within the event loops of Qt,
-Glib or wxPython.
+GLib or wxPython.
+
+%description -l pl.UTF-8
+pyudev to wydane na licencji LGPL czysto pythonowe wiązanie do libudev
+- biblioteki zarządzania urządzeniami i sprzętem dla Linuksa.
+Obsługuje prawie całą funkcjonalność libudev, potrafi wyliczać
+urządzenia, odpytywać o właściwości i atrybuty urządzeń oraz
+monitorować urządzenia, włącznie z asynchronicznym monitorowaniem z
+użyciem wątków albo wewnątrz pętli zdarzeń Qt, GLiba czy wxPythona.
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -44,8 +53,8 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-%py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
+%py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -54,4 +63,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES.rst README.rst doc/
 %{py_sitescriptdir}/%{module}
-%{py_sitescriptdir}/*.egg-info
+%{py_sitescriptdir}/pyudev-%{version}-py*.egg-info
