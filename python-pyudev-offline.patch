@@ -1,0 +1,19 @@
+--- pyudev-0.16.1/doc/conf.py.orig	2012-08-01 21:25:48.000000000 +0200
++++ pyudev-0.16.1/doc/conf.py	2012-09-01 10:30:21.520539639 +0200
+@@ -103,12 +103,13 @@
+ html_sidebars = {'**': ['info.html', 'localtoc.html', 'relations.html',
+                         'sourcelink.html']}
+ 
+-intersphinx_mapping = {'python': ('http://docs.python.org/', None),
+-                       'pytest': ('http://pytest.org/latest', None),
+-                       'pyside': ('http://www.pyside.org/docs/pyside/', None)}
++intersphinx_mapping = {'python': ('http://docs.python.org/', 'python-objects.inv'),
++                       'pytest': ('http://pytest.org/latest', 'pytest-objects.inv'),
++                       'pyside': ('http://www.pyside.org/docs/pyside/', 'pyside-objects.inv')}
+ 
+ issuetracker = 'github'
+ issuetracker_project = 'lunaryorn/pyudev'
++issuetracker_plaintext_issues = False
+ 
+ 
+ class UDevVersion(Directive):
