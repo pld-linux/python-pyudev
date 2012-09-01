@@ -65,7 +65,6 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 %{?with_tests:%{__python} setup.py test}
 
 %if %{with doc}
-sphinx-build -W -b linkcheck -d doc/_doctrees doc doc/_linkcheck
 sphinx-build -W -b html -d doc/_doctrees doc doc/html
 %endif
 
