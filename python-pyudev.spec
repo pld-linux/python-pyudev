@@ -13,11 +13,14 @@ License:	LGPL v2.1+
 Group:		Development/Languages/Python
 Source0:	http://pypi.python.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
 # Source0-md5:	4034de584b6d9efcbfc590a047c63285
-Source1:	http://docs.python.org/objects.inv#/python-objects.inv
-# Source1-md5:	9128e774ec21dcd62dc5bca61cdd91ee
-Source2:	http://pytest.org/latest/objects.inv#/pytest-objects.inv
-# Source2-md5:	f53cc331c951c20a9d8926d901342309
-Source3:	http://www.pyside.org/docs/pyside/objects.inv#/pyside-objects.inv
+#Source1:	http://docs.python.org/2/objects.inv#/python-objects.inv
+Source1:	python-objects.inv
+# Source1-md5:	ad9c579afde0743e007b472cff7f1364
+#Source2:	http://pytest.org/latest/objects.inv#/pytest-objects.inv
+Source2:	pytest-objects.inv
+# Source2-md5:	0704c1b84755f3dd4d0cb782826791c6
+#Source3:	https://deptinfo-ensip.univ-poitiers.fr/ENS/pyside-docs/objects.inv#/pyside-objects.inv
+Source3:	pyside-objects.inv
 # Source3-md5:	8cc5c1ff0bb5ef9f4e9968c9b4a01984
 Patch0:		%{name}-offline.patch
 URL:		http://pyudev.readthedocs.org/
