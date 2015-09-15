@@ -9,12 +9,12 @@
 Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Name:		python-%{module}
-Version:	0.16.1
-Release:	6
+Version:	0.17
+Release:	1
 License:	LGPL v2.1+
 Group:		Development/Languages/Python
 Source0:	http://pypi.python.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
-# Source0-md5:	4034de584b6d9efcbfc590a047c63285
+# Source0-md5:	0450afde50383538a987d16450853fb1
 #Source1:	http://docs.python.org/2/objects.inv#/python-objects.inv
 Source1:	python-objects.inv
 # Source1-md5:	ad9c579afde0743e007b472cff7f1364
@@ -96,7 +96,7 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 %endif
 
 %if %{with doc}
-sphinx-build -W -b html -d doc/_doctrees doc doc/html
+sphinx-build -b html -d doc/_doctrees doc doc/html
 %endif
 
 %install
