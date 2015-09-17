@@ -1,9 +1,9 @@
 #
 # Conditional build:
-%bcond_without	doc	# HTML documentation build
-%bcond_without	tests	# do not perform "make test"
-%bcond_without  python2         # Python 2.x module
-%bcond_without  python3         # Python 3.x module
+%bcond_without	doc		# HTML documentation build
+%bcond_without	tests		# do not perform "make test"
+%bcond_without	python2         # Python 2.x module
+%bcond_without	python3         # Python 3.x module
 #
 %define 	module	pyudev
 Summary:	Pure Python binding for libudev
@@ -26,8 +26,14 @@ Source3:	pyside-objects.inv
 # Source3-md5:	8cc5c1ff0bb5ef9f4e9968c9b4a01984
 Patch0:		%{name}-offline.patch
 URL:		http://pyudev.readthedocs.org/
+%if %{with python2}
 BuildRequires:	python-devel >= 1:2.6
-BuildRequires:	python-distribute
+BuildRequires:	python-setuptools
+%endif
+%if %{with python3}
+BuildRequires:	python3-devel >= 1:3.2
+BuildRequires:	python3-setuptools
+%endif
 BuildRequires:	rpm-pythonprov
 %if %{with doc}
 # for tests 1.0b1 is required, but for docs generation 0.8 is sufficient
@@ -62,6 +68,7 @@ użyciem wątków albo wewnątrz pętli zdarzeń Qt, GLiba czy wxPythona.
 Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Group:		Development/Languages/Python
+Requires:	python3-modules
 
 %description -n python3-%{module}
 pyudev is a LGPL licensed, pure Python binding for libudev, the device
@@ -78,7 +85,6 @@ Obsługuje prawie całą funkcjonalność libudev, potrafi wyliczać
 urządzenia, odpytywać o właściwości i atrybuty urządzeń oraz
 monitorować urządzenia, włącznie z asynchronicznym monitorowaniem z
 użyciem wątków albo wewnątrz pętli zdarzeń Qt, GLiba czy wxPythona.
-
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -107,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 	install --skip-build \
 	--optimize=2 \
 	--root=$RPM_BUILD_ROOT
+
+%{__rm} -r $RPM_BUILD_ROOT%{py_sitescriptdir}/tests
 %endif
 %if %{with python3}
 %{__python3} setup.py \
@@ -114,6 +122,8 @@ rm -rf $RPM_BUILD_ROOT
 	install --skip-build \
 	--optimize=2 \
 	--root=$RPM_BUILD_ROOT
+
+%{__rm} -r $RPM_BUILD_ROOT%{py3_sitescriptdir}/tests
 %endif
 
 %clean
