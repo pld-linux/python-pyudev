@@ -94,11 +94,11 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 
 %build
 %if %{with python2}
-%{__python} setup.py build --build-base build-2 %{?with_tests:test}
+%py_build %{?with_tests:test}
 %endif
 
 %if %{with python3}
-%{__python3} setup.py build --build-base build-3 %{?with_tests:test}
+%py3_build %{?with_tests:test}
 %endif
 
 %if %{with doc}
@@ -108,20 +108,12 @@ sphinx-build -b html -d doc/_doctrees doc doc/html
 %install
 rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
-%{__python} setup.py \
-	build --build-base build-2 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 
 %{__rm} -r $RPM_BUILD_ROOT%{py_sitescriptdir}/tests
 %endif
 %if %{with python3}
-%{__python3} setup.py \
-	build --build-base build-3 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py3_install
 
 %{__rm} -r $RPM_BUILD_ROOT%{py3_sitescriptdir}/tests
 %endif
