@@ -26,6 +26,7 @@ Source3:	pyside-objects.inv
 # Source3-md5:	8cc5c1ff0bb5ef9f4e9968c9b4a01984
 Patch0:		%{name}-offline.patch
 URL:		http://pyudev.readthedocs.org/
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-setuptools
