@@ -42,7 +42,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	python-mock >= 0.8
 BuildRequires:	python-sphinxcontrib-issuetracker >= 0.9
 BuildRequires:	python-pytest >= 2.2
-BuildRequires:	sphinx-pdg >= 1.0.7
+BuildRequires:	sphinx-pdg-2 >= 1.0.7
 %endif
 Requires:	python-modules
 Requires:	udev-libs >= 1:151
@@ -103,7 +103,7 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 %endif
 
 %if %{with doc}
-sphinx-build -b html -d doc/_doctrees doc doc/html
+sphinx-build-2 -b html -d doc/_doctrees doc doc/html
 %endif
 
 %install
