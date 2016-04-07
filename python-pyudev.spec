@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	doc		# HTML documentation build
-%bcond_without	tests		# do not perform "make test"
+%bcond_with	tests		# test target [requires functional udev with device db]
 %bcond_without	python2         # Python 2.x module
 %bcond_without	python3         # Python 3.x module
 #
@@ -9,12 +9,13 @@
 Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Name:		python-%{module}
-Version:	0.17
-Release:	3
+Version:	0.19.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Development/Languages/Python
-Source0:	http://pypi.python.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
-# Source0-md5:	0450afde50383538a987d16450853fb1
+#Source0Download: https://pypi.python.org/simple/pyudev/
+Source0:	https://pypi.python.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
+# Source0-md5:	1151e9d05baf6ce7b43e7574dc0ef154
 #Source1:	http://docs.python.org/2/objects.inv#/python-objects.inv
 Source1:	python-objects.inv
 # Source1-md5:	ad9c579afde0743e007b472cff7f1364
@@ -30,21 +31,32 @@ BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-setuptools
+%if %{with tests}
+BuildRequires:	python-docutils >= 0.9
+BuildRequires:	python-hypothesis
+BuildRequires:	python-mock >= 1.0
+BuildRequires:	python-pytest >= 2.8
+%endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-devel >= 1:3.2
 BuildRequires:	python3-setuptools
+%if %{with tests}
+BuildRequires:	python3-docutils >= 0.9
+BuildRequires:	python3-hypothesis
+BuildRequires:	python3-mock >= 1.0
+BuildRequires:	python3-pytest >= 2.8
+%endif
 %endif
 BuildRequires:	rpm-pythonprov
 %if %{with doc}
 # for tests 1.0b1 is required, but for docs generation 0.8 is sufficient
-#BuildRequires:	python-mock >= 1.0-0.b1
 BuildRequires:	python-mock >= 0.8
 BuildRequires:	python-sphinxcontrib-issuetracker >= 0.9
 BuildRequires:	python-pytest >= 2.2
 BuildRequires:	sphinx-pdg-2 >= 1.0.7
 %endif
-Requires:	python-modules
+Requires:	python-modules >= 1:2.6
 Requires:	udev-libs >= 1:151
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -69,7 +81,7 @@ użyciem wątków albo wewnątrz pętli zdarzeń Qt, GLiba czy wxPythona.
 Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Group:		Development/Languages/Python
-Requires:	python3-modules
+Requires:	python3-modules >= 1:3.2
 
 %description -n python3-%{module}
 pyudev is a LGPL licensed, pure Python binding for libudev, the device
@@ -103,20 +115,21 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 %endif
 
 %if %{with doc}
+PYTHONPATH=build-2/lib \
 sphinx-build-2 -b html -d doc/_doctrees doc doc/html
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %if %{with python2}
 %py_install
 
-%{__rm} -r $RPM_BUILD_ROOT%{py_sitescriptdir}/tests
+%py_postclean
 %endif
+
 %if %{with python3}
 %py3_install
-
-%{__rm} -r $RPM_BUILD_ROOT%{py3_sitescriptdir}/tests
 %endif
 
 %clean
@@ -126,7 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGES.rst README.rst %{?with_doc:doc/html}
-%{py_sitescriptdir}/%{module}
+%{py_sitescriptdir}/pyudev
 %{py_sitescriptdir}/pyudev-%{version}-py*.egg-info
 %endif
 
@@ -134,6 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python3-%{module}
 %defattr(644,root,root,755)
 %doc CHANGES.rst README.rst %{?with_doc:doc/html}
-%{py3_sitescriptdir}/%{module}
+%{py3_sitescriptdir}/pyudev
 %{py3_sitescriptdir}/pyudev-%{version}-py*.egg-info
 %endif
