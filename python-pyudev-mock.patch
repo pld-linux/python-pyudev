@@ -1,0 +1,112 @@
+--- pyudev-0.21.0/tests/_device_tests/_device_tests.py.orig	2016-07-21 22:32:53.000000000 +0200
++++ pyudev-0.21.0/tests/_device_tests/_device_tests.py	2017-04-16 12:44:06.869191990 +0200
+@@ -37,7 +37,10 @@ from hypothesis import settings
+ from hypothesis import strategies
+ 
+ import pytest
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from pyudev import Device
+ from pyudev import Devices
+--- pyudev-0.21.0/tests/_device_tests/_tags_tests.py.orig	2016-07-21 22:32:53.000000000 +0200
++++ pyudev-0.21.0/tests/_device_tests/_tags_tests.py	2017-04-16 12:43:43.242525595 +0200
+@@ -31,7 +31,10 @@ from hypothesis import settings
+ from hypothesis import strategies
+ 
+ import pytest
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from pyudev import Devices
+ 
+--- pyudev-0.21.0/tests/plugins/mock_libudev.py.orig	2016-02-02 17:19:29.000000000 +0100
++++ pyudev-0.21.0/tests/plugins/mock_libudev.py	2017-04-16 12:43:19.139192536 +0200
+@@ -34,7 +34,10 @@ from operator import attrgetter
+ from contextlib import contextmanager
+ from collections import namedtuple
+ 
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ 
+ Node = namedtuple('Node', 'name value next')
+--- pyudev-0.21.0/tests/test_core.py.orig	2016-04-29 23:17:02.000000000 +0200
++++ pyudev-0.21.0/tests/test_core.py	2017-04-16 12:41:32.362527088 +0200
+@@ -22,7 +22,10 @@ from __future__ import (print_function,
+ import random
+ import syslog
+ 
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from pyudev import udev_version
+ 
+--- pyudev-0.21.0/tests/test_enumerate.py.orig	2016-07-21 22:32:53.000000000 +0200
++++ pyudev-0.21.0/tests/test_enumerate.py	2017-04-16 12:42:44.235859601 +0200
+@@ -20,7 +20,10 @@ from __future__ import (print_function,
+                         absolute_import)
+ 
+ import pytest
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from hypothesis import given
+ from hypothesis import settings
+--- pyudev-0.21.0/tests/test_monitor.py.orig	2016-07-21 22:32:53.000000000 +0200
++++ pyudev-0.21.0/tests/test_monitor.py	2017-04-16 12:41:04.209194078 +0200
+@@ -25,7 +25,10 @@ from contextlib import contextmanager
+ from select import select
+ 
+ import pytest
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from pyudev import Monitor, MonitorObserver, Devices
+ 
+--- pyudev-0.21.0/tests/test_observer_deprecated.py.orig	2016-07-21 22:32:53.000000000 +0200
++++ pyudev-0.21.0/tests/test_observer_deprecated.py	2017-04-16 12:42:18.385859897 +0200
+@@ -19,7 +19,10 @@ from __future__ import (print_function,
+                         absolute_import)
+ 
+ import pytest
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from pyudev import Monitor, Devices
+ 
+--- pyudev-0.21.0/tests/test_observer.py.orig	2016-07-21 22:32:53.000000000 +0200
++++ pyudev-0.21.0/tests/test_observer.py	2017-04-16 12:41:58.945860118 +0200
+@@ -21,7 +21,10 @@ from __future__ import (print_function,
+ import random
+ 
+ import pytest
+-import mock
++try:
++    from unittest import mock
++except ImportError:
++    import mock
+ 
+ from pyudev import Monitor, Devices
+ 

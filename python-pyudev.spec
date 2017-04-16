@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	doc		# HTML documentation build
-%bcond_with	tests		# test target [requires functional udev with device db]
+%bcond_with	tests		# py.test tests [requires functional udev with device db]
 %bcond_without	python2         # Python 2.x module
 %bcond_without	python3         # Python 3.x module
 #
@@ -9,13 +9,13 @@
 Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Name:		python-%{module}
-Version:	0.19.0
-Release:	2
+Version:	0.21.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/pyudev/
-Source0:	https://pypi.python.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
-# Source0-md5:	1151e9d05baf6ce7b43e7574dc0ef154
+Source0:	https://files.pythonhosted.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
+# Source0-md5:	cf4d9db7d772622144ca1be6b5d9353b
 #Source1:	http://docs.python.org/2/objects.inv#/python-objects.inv
 Source1:	python-objects.inv
 # Source1-md5:	ad9c579afde0743e007b472cff7f1364
@@ -26,8 +26,8 @@ Source2:	pytest-objects.inv
 Source3:	pyside-objects.inv
 # Source3-md5:	8cc5c1ff0bb5ef9f4e9968c9b4a01984
 Patch0:		%{name}-offline.patch
+Patch1:		%{name}-mock.patch
 URL:		http://pyudev.readthedocs.org/
-BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	python-setuptools
@@ -36,6 +36,7 @@ BuildRequires:	python-docutils >= 0.9
 BuildRequires:	python-hypothesis
 BuildRequires:	python-mock >= 1.0
 BuildRequires:	python-pytest >= 2.8
+BuildRequires:	python-six
 %endif
 %endif
 %if %{with python3}
@@ -44,11 +45,12 @@ BuildRequires:	python3-setuptools
 %if %{with tests}
 BuildRequires:	python3-docutils >= 0.9
 BuildRequires:	python3-hypothesis
-BuildRequires:	python3-mock >= 1.0
 BuildRequires:	python3-pytest >= 2.8
+BuildRequires:	python3-six
 %endif
 %endif
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
 # for tests 1.0b1 is required, but for docs generation 0.8 is sufficient
 BuildRequires:	python-mock >= 0.8
@@ -102,16 +104,21 @@ użyciem wątków albo wewnątrz pętli zdarzeń Qt, GLiba czy wxPythona.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 
 %build
 %if %{with python2}
-%py_build %{?with_tests:test}
+%py_build
+
+%{?with_tests:PYTHONPATH=$(pwd):$(pwd)/build-2/lib %{__python} -m pytest tests}
 %endif
 
 %if %{with python3}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%{?with_tests:PYTHONPATH=$(pwd):$(pwd)/build-3/lib %{__python3} -m pytest tests}
 %endif
 
 %if %{with doc}
