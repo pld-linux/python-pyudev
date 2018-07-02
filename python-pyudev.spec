@@ -10,7 +10,7 @@ Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Name:		python-%{module}
 Version:	0.21.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/pyudev/
