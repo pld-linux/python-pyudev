@@ -9,24 +9,14 @@
 Summary:	Pure Python binding for libudev
 Summary(pl.UTF-8):	Czysto pythonowe wiązanie do libudev
 Name:		python-%{module}
-Version:	0.21.0
-Release:	3
+Version:	0.22.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Development/Languages/Python
-#Source0Download: https://pypi.python.org/simple/pyudev/
+#Source0Download: https://pypi.org/simple/pyudev/
 Source0:	https://files.pythonhosted.org/packages/source/p/pyudev/%{module}-%{version}.tar.gz
-# Source0-md5:	cf4d9db7d772622144ca1be6b5d9353b
-#Source1:	http://docs.python.org/2/objects.inv#/python-objects.inv
-Source1:	python-objects.inv
-# Source1-md5:	ad9c579afde0743e007b472cff7f1364
-#Source2:	http://pytest.org/latest/objects.inv#/pytest-objects.inv
-Source2:	pytest-objects.inv
-# Source2-md5:	0704c1b84755f3dd4d0cb782826791c6
-#Source3:	https://deptinfo-ensip.univ-poitiers.fr/ENS/pyside-docs/objects.inv#/pyside-objects.inv
-Source3:	pyside-objects.inv
-# Source3-md5:	8cc5c1ff0bb5ef9f4e9968c9b4a01984
-Patch0:		%{name}-offline.patch
-Patch1:		%{name}-mock.patch
+# Source0-md5:	377eda61186c91e9440f01d76dbb4206
+Patch0:		%{name}-mock.patch
 URL:		http://pyudev.readthedocs.org/
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.6
@@ -101,24 +91,38 @@ urządzenia, odpytywać o właściwości i atrybuty urządzeń oraz
 monitorować urządzenia, włącznie z asynchronicznym monitorowaniem z
 użyciem wątków albo wewnątrz pętli zdarzeń Qt, GLiba czy wxPythona.
 
+%package apidocs
+Summary:	API documentation for Python pyudev module
+Summary(pl.UTF-8):	Dokumentacja API modułu Pythona pyudev
+Group:		Documentation
+
+%description apidocs
+API documentation for Python pyudev module.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API modułu Pythona pyudev.
+
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p1
-%patch1 -p1
-
-cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} doc
 
 %build
 %if %{with python2}
 %py_build
 
-%{?with_tests:PYTHONPATH=$(pwd):$(pwd)/build-2/lib %{__python} -m pytest tests}
+%if %{with tests}
+PYTHONPATH=$(pwd):$(pwd)/build-2/lib \
+%{__python} -m pytest tests
+%endif
 %endif
 
 %if %{with python3}
 %py3_build
 
-%{?with_tests:PYTHONPATH=$(pwd):$(pwd)/build-3/lib %{__python3} -m pytest tests}
+%if %{with tests}
+PYTHONPATH=$(pwd):$(pwd)/build-3/lib \
+%{__python3} -m pytest tests
+%endif
 %endif
 
 %if %{with doc}
@@ -145,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst %{?with_doc:doc/html}
+%doc CHANGES.rst README.rst
 %{py_sitescriptdir}/pyudev
 %{py_sitescriptdir}/pyudev-%{version}-py*.egg-info
 %endif
@@ -153,7 +157,13 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst %{?with_doc:doc/html}
+%doc CHANGES.rst README.rst
 %{py3_sitescriptdir}/pyudev
 %{py3_sitescriptdir}/pyudev-%{version}-py*.egg-info
+%endif
+
+%if %{with doc}
+%files apidocs
+%defattr(644,root,root,755)
+%doc doc/html/{_static,api,tests,*.html,*.js}
 %endif

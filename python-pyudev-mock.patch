@@ -26,20 +26,20 @@
  
  from pyudev import Devices
  
---- pyudev-0.21.0/tests/plugins/mock_libudev.py.orig	2016-02-02 17:19:29.000000000 +0100
-+++ pyudev-0.21.0/tests/plugins/mock_libudev.py	2017-04-16 12:43:19.139192536 +0200
-@@ -34,7 +34,10 @@ from operator import attrgetter
- from contextlib import contextmanager
+--- pyudev-0.22.0/tests/plugins/mock_libudev.py.orig	2020-02-09 12:46:31.756005870 +0100
++++ pyudev-0.22.0/tests/plugins/mock_libudev.py	2020-02-09 12:48:09.762141592 +0100
+@@ -33,7 +33,10 @@
  from collections import namedtuple
  
+ import pytest
 -import mock
 +try:
 +    from unittest import mock
 +except ImportError:
 +    import mock
  
- 
  Node = namedtuple('Node', 'name value next')
+ 
 --- pyudev-0.21.0/tests/test_core.py.orig	2016-04-29 23:17:02.000000000 +0200
 +++ pyudev-0.21.0/tests/test_core.py	2017-04-16 12:41:32.362527088 +0200
 @@ -22,7 +22,10 @@ from __future__ import (print_function,
@@ -54,12 +54,12 @@
  
  from pyudev import udev_version
  
---- pyudev-0.21.0/tests/test_enumerate.py.orig	2016-07-21 22:32:53.000000000 +0200
-+++ pyudev-0.21.0/tests/test_enumerate.py	2017-04-16 12:42:44.235859601 +0200
-@@ -20,7 +20,10 @@ from __future__ import (print_function,
+--- pyudev-0.22.0/tests/test_enumerate.py.orig	2020-02-09 12:46:31.759339185 +0100
++++ pyudev-0.22.0/tests/test_enumerate.py	2020-02-09 12:47:35.475660671 +0100
+@@ -18,7 +18,10 @@
+ from __future__ import (print_function, division, unicode_literals,
                          absolute_import)
  
- import pytest
 -import mock
 +try:
 +    from unittest import mock
